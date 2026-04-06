@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.routes.js";
+import cookieParser from "cookie-parser";
 // Carga las variables del .env y las pone en process.env
 dotenv.config();
 
@@ -11,6 +12,8 @@ const app = express();
 
 // Metodo para que express entienda el JSON en el body de las requests (req.body)
 app.use(express.json());
+// Tiene que estar antes de las rutas para poder procesar las cookies de los headers
+app.use(cookieParser());
 // Metodo para ver las llamadas al back
 app.use(morgan("dev"));
 // Todas las rutas empiezan con /api
