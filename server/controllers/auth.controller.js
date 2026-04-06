@@ -1,5 +1,6 @@
 import User from "../models/User.model.js";
 import bcrypt from "bcryptjs";
+import { createAccessToken } from "../libs/jwt.js";
 // Funciones que van a ejecutar las rutas
 export const register = async (req, res) => {
   const { email, password, username } = req.body;
@@ -13,6 +14,10 @@ export const register = async (req, res) => {
       password: passwordHash,
     });
     const userSaved = await newUser.save();
+    const token = await createAccessToken({ id: userSaved._id });
+
+    res.cookie("token", token);
+
     res.json({
       id: userSaved._id,
       username: userSaved.username,
