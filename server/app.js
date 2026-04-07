@@ -5,12 +5,19 @@ import mongoose from "mongoose";
 import authRoutes from "./routes/auth.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 // Carga las variables del .env y las pone en process.env
 dotenv.config();
 
 // Crear una instancia aplicacion de express
 const app = express();
-
+// Para permitir que los dominios se puedan comunicar con el servidor
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true, //Para que express agregue el header Access-Controll...
+  }),
+);
 // Metodo para que express entienda el JSON en el body de las requests (req.body)
 app.use(express.json());
 // Tiene que estar antes de las rutas para poder procesar las cookies de los headers
