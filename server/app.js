@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.routes.js";
+import usersRoutes from "./routes/users.routes.js";
 import cookieParser from "cookie-parser";
 // Carga las variables del .env y las pone en process.env
 dotenv.config();
@@ -17,7 +18,9 @@ app.use(cookieParser());
 // Metodo para ver las llamadas al back
 app.use(morgan("dev"));
 // Todas las rutas empiezan con /api
-app.use("/api", authRoutes);
+app.use("/api/auth", authRoutes);
+
+app.use("/api/users", usersRoutes);
 // Conexion a MongoDB Atlas usando libreria mongoose
 mongoose
   .connect(process.env.MONGO_URI)
