@@ -1,9 +1,16 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/auth-context";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function LoginPage(){
     const {register, handleSubmit, formState: {errors}} = useForm();
-    const {signin, errors: signinErrors} = useAuth();
+    const {signin, isAuthenticated, errors: signinErrors} = useAuth();
+    const navigate = useNavigate();
+        useEffect(() => {
+            if (isAuthenticated) navigate('/profile');
+        }, [isAuthenticated, navigate]);
+    
     const onSubmit = handleSubmit((data) =>{
         signin(data);
     })
@@ -11,7 +18,7 @@ function LoginPage(){
         <div>
             <div>
                 {signinErrors.map((error, i) => (
-                    <div className='bg-red-500, text-white' key={i}>
+                    <div className='bg-red-500 text-white' key={i}>
                         {error}
                     </div>
                 ))}

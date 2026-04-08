@@ -2,6 +2,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   //Browser Router habilita el sistema de rutas en toda la app
@@ -15,10 +16,8 @@ function App() {
           <Route path='/register' element={<RegisterPage/>} />
 
           {/* Rutas protegidas - ProtectedRoute verifica si hay sesion antes de renderizar */}
-          <Route element={<h1>Ruta Protegida</h1>}>
+          <Route element={<ProtectedRoute />}>
             <Route path='/users' element={<h1>Users</h1>} />
-            <Route path='/create-user' element={<h1>Create User</h1>} />
-            <Route path='/profile' element={<h1>Profile</h1>} />
           </Route>
        </Routes>
       </BrowserRouter>

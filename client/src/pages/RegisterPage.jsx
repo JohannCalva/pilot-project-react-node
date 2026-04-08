@@ -8,7 +8,7 @@ function RegisterPage(){
     const { signup, isAuthenticated, errors: registerErrors } = useAuth();
     const navigate = useNavigate();
     useEffect(() => {
-        if (isAuthenticated) navigate('/profile');
+        if (isAuthenticated) navigate('/users');
     }, [isAuthenticated, navigate]);
     // Funcion para manejar el submit
     const onSubmit = handleSubmit(async (values) => {
@@ -19,7 +19,7 @@ function RegisterPage(){
         <div>
             {
                 registerErrors.map((error, i) => (
-                    <div className='bg-red-500, text-white' key={i}>
+                    <div className='bg-red-500 text-white' key={i}>
                         {error}
                     </div>
                 ))
