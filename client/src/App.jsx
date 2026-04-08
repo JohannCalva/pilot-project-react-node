@@ -3,6 +3,9 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import UsersPage from "./pages/UsersPage.jsx";
+import CreateUserPage from "./pages/CreateUserPage.jsx";
+import EditUserPage from "./pages/EditUserPage.jsx";
 
 function App() {
   //Browser Router habilita el sistema de rutas en toda la app
@@ -17,7 +20,9 @@ function App() {
 
           {/* Rutas protegidas - ProtectedRoute verifica si hay sesion antes de renderizar */}
           <Route element={<ProtectedRoute />}>
-            <Route path='/users' element={<h1>Users</h1>} />
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/users/create" element={<CreateUserPage />} />
+            <Route path="/users/edit/:id" element={<EditUserPage />} />
           </Route>
        </Routes>
       </BrowserRouter>
