@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginRequest, registerRequest } from '../api/auth';
+import { AuthContext } from "./auth-context";
 
 //Provider — envuelve la app y hace que el estado esté disponible en todos los componentes
 export const AuthProvider = ({children}) => {
@@ -15,7 +16,8 @@ export const AuthProvider = ({children}) => {
             setIsAuthenticated(true);
         }catch(error){
             // Si el backend devuelve errores los guarda en el estado para mostrarlos en el form
-            setErrors(error.response.data);
+            const errorData = error.response?.data;
+            setErrors(Array.isArray(errorData) ? errorData : [errorData || 'An error occurred']);
         }
     }
     const signin = async(userData) => {
@@ -24,9 +26,20 @@ export const AuthProvider = ({children}) => {
             setUser(res.data);
             setIsAuthenticated(true);
         }catch(error){
-            setErrors(error.response.data);
+            const errorData = error.response?.data;
+            setErrors(Array.isArray(errorData) ? errorData : [errorData || 'An error occurred']);
         }
     }
+
+    useEffect(() => {
+        if (errors.length > 0) {
+            const timer = setTimeout(() => {
+                setErrors([])
+            }, 5000)
+            return () => clearTimeout(timer);
+        }
+    }, [errors])
+
     return (
         <AuthContext.Provider value={{signup, signin, user, isAuthenticated, errors}}>
             {children}
