@@ -6,6 +6,8 @@ export const register = async (req, res) => {
   //Extrae datos del request
   const { email, password, username } = req.body;
   try {
+    const userFound = await User.findOne({ email });
+    if (userFound) return res.status(400).json(["The email is already in use"]);
     //Ejecuta bcrypt y su metodo hash para encriptar la contrasena
     // El 10 indica las veces que se ejecutara el algoritmo
     const passwordHash = await bcrypt.hash(password, 10);
