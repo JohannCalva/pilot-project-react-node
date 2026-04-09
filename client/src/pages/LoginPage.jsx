@@ -8,7 +8,7 @@ function LoginPage(){
     const {signin, isAuthenticated, errors: signinErrors} = useAuth();
     const navigate = useNavigate();
         useEffect(() => {
-            if (isAuthenticated) navigate('/profile');
+            if (isAuthenticated) navigate('/users');
         }, [isAuthenticated, navigate]);
     
     const onSubmit = handleSubmit((data) =>{
@@ -18,7 +18,7 @@ function LoginPage(){
         <div>
             <div>
                 {signinErrors.map((error, i) => (
-                    <div className='bg-red-500 text-white' key={i}>
+                    <div key={i}>
                         {error}
                     </div>
                 ))}

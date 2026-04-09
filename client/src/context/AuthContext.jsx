@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { loginRequest, registerRequest } from '../api/auth';
+import { loginRequest, registerRequest, verifyTokenRequest } from '../api/auth';
 import { AuthContext } from "./auth-context";
-
+import Cookies from "js-cookie";
 //Provider — envuelve la app y hace que el estado esté disponible en todos los componentes
 export const AuthProvider = ({children}) => {
     //Usuario que sera leido en la aplicacion
@@ -39,6 +39,26 @@ export const AuthProvider = ({children}) => {
             return () => clearTimeout(timer);
         }
     }, [errors])
+
+    useEffect(() => {
+        async function checkLogin() {
+            const cookies = Cookies.get();
+            if (cookies.token) {
+                try {
+                    const res = await verifyTokenRequest(cookies.token);
+                    if (!res.data) setIsAuthenticated(false);
+                    setIsAuthenticated(true);
+                    setUser(res.data);
+                } catch (error) {
+                    console.log(error);
+                    setIsAuthenticated(false);
+                    setUser(null);
+                }
+                
+            }
+        }
+        checkLogin();
+    }, [])
 
     return (
         <AuthContext.Provider value={{signup, signin, user, isAuthenticated, errors}}>

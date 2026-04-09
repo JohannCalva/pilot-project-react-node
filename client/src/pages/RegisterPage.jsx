@@ -19,14 +19,14 @@ function RegisterPage(){
         <div>
             {
                 registerErrors.map((error, i) => (
-                    <div className='bg-red-500 text-white' key={i}>
+                    <div key={i}>
                         {error}
                     </div>
                 ))
             }
             <form onSubmit={onSubmit}>
                 <label>Username:</label>
-                {errors.password && <span>El username es requerido</span>}
+                {errors.username && <span>El username es requerido</span>}
                 <input type="text" {...register("username", {required: true})} />
                 <label>Email:</label>
                 {errors.email && <span>Email es requerido</span>}
