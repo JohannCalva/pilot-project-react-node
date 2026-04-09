@@ -15,36 +15,45 @@ function RegisterPage(){
         signup(values);
     }); 
 
-    return(
-        <div>
-            {
-                registerErrors.map((error, i) => (
-                    <div key={i}>
+    return (
+        <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+            <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%' }}>
+                <h2 className="text-center mb-4">Registro</h2>
+
+                {registerErrors.map((error, i) => (
+                    <div className="alert alert-danger p-2 mb-3 small" key={i}>
                         {error}
                     </div>
-                ))
-            }
-            <form onSubmit={onSubmit}>
-                <label>Username:</label>
-                {errors.username && <span>El username es requerido</span>}
-                <input type="text" {...register("username", {required: true})} />
-                <label>Email:</label>
-                {errors.email && <span>Email es requerido</span>}
-                <input type="email" {...register("email", {required: true})} />
-                <label>Password:</label>
-                {errors.password && <span>Contrasena es requerido</span>}
-                <input type="password" {...register("password", {required: true})} />
-                <button type="submit">
-                    Register
-                </button>
-            </form>
-            <p>Already have an account? {" "}
-                <Link to="/login">
-                    Login
-                </Link>
-            </p>
+                ))}
+
+                <form onSubmit={onSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Username</label>
+                        <input type="text" className="form-control" {...register("username", {required: true})} />
+                        {errors.username && <small className="text-danger">El username es requerido</small>}
+                    </div>
+
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input type="email" className="form-control" {...register("email", {required: true})} />
+                        {errors.email && <small className="text-danger">El email es requerido</small>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="form-label">Password</label>
+                        <input type="password" className="form-control" {...register("password", {required: true})} />
+                        {errors.password && <small className="text-danger">La contraseña es requerida</small>}
+                    </div>
+
+                    <button type="submit" className="btn btn-primary w-100 mb-3">
+                        Register
+                    </button>
+                </form>
+
+                <p className="text-center mb-0">¿Ya tienes una cuenta? <Link to="/login" className="text-decoration-none">Login</Link></p>
+            </div>
         </div>
-    )
+    );
 }
 
 export default RegisterPage;

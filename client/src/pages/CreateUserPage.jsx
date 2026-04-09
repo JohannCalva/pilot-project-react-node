@@ -17,42 +17,63 @@ function CreateUserPage() {
     });
 
     return (
-        <div>
-            <h1>Crear Usuario</h1>
-            <form onSubmit={onSubmit}>
-                <label>Username:</label>
-                {errors.username && <span>El username es requerido</span>}
-                <input
-                    type="text"
-                    {...register("username", { required: true })}
-                />
+        <div className="container mt-5">
+            <div className="card shadow-sm mx-auto" style={{ maxWidth: '500px' }}>
+                <div className="card-header bg-white pb-0 border-bottom-0 mt-3">
+                    <h2 className="text-center">Crear Usuario</h2>
+                </div>
+                <div className="card-body p-4">
+                    <form onSubmit={onSubmit}>
+                        <div className="mb-3">
+                            <label className="form-label">Username</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                {...register("username", { required: true })}
+                            />
+                            {errors.username && <small className="text-danger mt-1">El username es requerido</small>}
+                        </div>
 
-                <label>Email:</label>
-                {errors.email && <span>El email es requerido</span>}
-                <input
-                    type="email"
-                    {...register("email", { required: true })}
-                />
+                        <div className="mb-3">
+                            <label className="form-label">Email</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                {...register("email", { required: true })}
+                            />
+                            {errors.email && <small className="text-danger mt-1">El email es requerido</small>}
+                        </div>
 
-                <label>Password:</label>
-                {errors.password && <span>La contraseña es requerida</span>}
-                <input
-                    type="password"
-                    {...register("password", { required: true })}
-                />
+                        <div className="mb-3">
+                            <label className="form-label">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                {...register("password", { required: true })}
+                            />
+                            {errors.password && <small className="text-danger mt-1">La contraseña es requerida</small>}
+                        </div>
 
-                <label>Role:</label>
-                {/* Select para limitar los valores al enum definido en el modelo */}
-                <select {...register("role")}>
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
+                        <div className="mb-4">
+                            <label className="form-label">Role</label>
+                            {/* Select para limitar los valores al enum definido en el modelo */}
+                            <select className="form-select" {...register("role")}>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
 
-                <button type="submit">Crear</button>
-                <button type="button" onClick={() => navigate("/users")}>
-                    Cancelar
-                </button>
-            </form>
+                        <div className="d-flex justify-content-between">
+                            <button type="button" className="btn btn-secondary w-48" onClick={() => navigate("/users")}>
+                                Cancelar
+                            </button>
+                            <button type="submit" className="btn btn-success w-48">
+                                <i className="bi bi-floppy me-1"></i> Crear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }

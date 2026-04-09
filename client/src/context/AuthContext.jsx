@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { loginRequest, registerRequest, verifyTokenRequest } from '../api/auth';
+import { loginRequest, registerRequest, verifyTokenRequest, logoutRequest } from '../api/auth';
 import { AuthContext } from "./auth-context";
 import Cookies from "js-cookie";
 //Provider — envuelve la app y hace que el estado esté disponible en todos los componentes
@@ -28,6 +28,17 @@ export const AuthProvider = ({children}) => {
         }catch(error){
             const errorData = error.response?.data;
             setErrors(Array.isArray(errorData) ? errorData : [errorData || 'An error occurred']);
+        }
+    }
+
+    const logout = async () => {
+        try {
+            await logoutRequest();
+            Cookies.remove("token");
+            setIsAuthenticated(false);
+            setUser(null);
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -61,7 +72,7 @@ export const AuthProvider = ({children}) => {
     }, [])
 
     return (
-        <AuthContext.Provider value={{signup, signin, user, isAuthenticated, errors}}>
+        <AuthContext.Provider value={{signup, signin, logout, user, isAuthenticated, errors}}>
             {children}
         </AuthContext.Provider>
     );
